@@ -26,6 +26,10 @@ export default class AppManager extends Component {
       });
   }
 
+  scanAgain = () => {
+    this.startAnalyzing();
+  };
+
   forCameraResize = () => {
     const video = document.getElementById("cameraSceneView");
     if (!video) return;
@@ -62,7 +66,11 @@ export default class AppManager extends Component {
   startAnalyzing = async () => {
     const localizeModel = await this.state.model;
     const data = await API.startPredicting(localizeModel, this.setLargest);
-    if (typeof this.state.largest["score"] !== "undefined") return;
+    if (typeof this.state.largest["score"] !== "undefined") {
+      document.getElementById("cameraSceneRects").innerHTML = "";
+      alert("An item was found");
+      return;
+    }
     if (data) this.startAnalyzing();
   };
 

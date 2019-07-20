@@ -114,14 +114,14 @@ const API = {
 
       const text = document.createElement("div");
       text.className = "text";
-      text.innerText = `${box["class"]} ${Number(box["score"].toFixed(2)) *
-        100}`;
+      text.innerText = `${box["class"]}`;
       text.style.color = colors[box["class"]];
 
       if (
-        box["class"] === "laptop" ||
-        box["class"] === "mouse" ||
-        box["class"] === "tvmonitor"
+        box["class"] === "pizza" ||
+        box["class"] === "donut" ||
+        box["class"] === "cake" ||
+        box["class"] === "hot dog"
       ) {
         rect.appendChild(text);
         rects.appendChild(rect);
