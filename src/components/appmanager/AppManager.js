@@ -62,7 +62,7 @@ export default class AppManager extends Component {
   startAnalyzing = async () => {
     const localizeModel = await this.state.model;
     const data = await API.startPredicting(localizeModel, this.setLargest);
-    console.log(this.state.largest);
+    if (typeof this.state.largest["score"] !== "undefined") return;
     if (data) this.startAnalyzing();
   };
 
