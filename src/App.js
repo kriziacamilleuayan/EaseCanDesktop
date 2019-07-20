@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Reviews from './components/review/Reviews'
 import "./App.css";
 
 import CameraFrame from "./components/camera/CameraFrame";
@@ -17,6 +18,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
+
         {this.state.viewSplash &&
           <Splash hideSplash={this.hideSplash} />
         }
@@ -26,7 +28,10 @@ export default class App extends Component {
           </AppManager>
         } */}
         {!this.state.viewSplash &&
-          <Reviews />
+            <AppManager>
+              <CameraFrame/>
+              <Reviews/>
+            </AppManager>
         }
       </div>
     );
