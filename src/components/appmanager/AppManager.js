@@ -10,7 +10,8 @@ export default class AppManager extends Component {
     cameraDOM: false,
     currentStream: null,
     intervalID: null,
-    facingMode: ""
+    facingMode: "",
+    largest: {}
   };
 
   componentDidMount() {
@@ -60,8 +61,13 @@ export default class AppManager extends Component {
 
   startAnalyzing = async () => {
     const localizeModel = await this.state.model;
-    const data = await API.startPredicting(localizeModel);
+    const data = await API.startPredicting(localizeModel, this.setLargest);
+    console.log(this.state.largest);
     if (data) this.startAnalyzing();
+  };
+
+  setLargest = lar => {
+    this.setState({ largest: lar });
   };
 
   render() {

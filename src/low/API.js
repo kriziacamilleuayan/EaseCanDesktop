@@ -4,8 +4,6 @@ import * as tf from "@tensorflow/tfjs";
 const API = {
   getModel: () =>
     new Promise((resolve, reject) => {
-      const MODELS_URL = __dirname + "model/tensorflowjs_model.pb";
-      const WEIGHTS_URL = __dirname + "model/weights_manifest.json";
       let myYolo = yolo.v3tiny();
       if (!myYolo) reject("Error fetching model");
       resolve(myYolo);
@@ -61,7 +59,7 @@ const API = {
         });
     }),
 
-  startPredicting: async model => {
+  startPredicting: async (model, setLargest) => {
     const webcam = document.getElementById("cameraSceneView");
     const rects = document.getElementById("cameraSceneRects");
     let colors = {};
@@ -78,14 +76,7 @@ const API = {
       10.52
     ];
     const start = performance.now();
-    /*const boxes = await model.predict(webcam, {
-      numClasses: 2,
-      maxBoxes: 20,
-      scoreThreshold: 0.3,
-      iouThreshold: 0.3,
-      classNames: ["non_pathogenic", "pathogenic"],
-      anchors: [...default_anchors]
-    }); */
+
     const boxes = await model.predict(webcam, {
       scoreThreshold: 0.3
     });
@@ -103,6 +94,7 @@ const API = {
 
     const scaleW = cw / vw;
     const scaleH = ch / vh;
+    let largest = {};
     boxes.forEach(box => {
       if (!(box["class"] in colors)) {
         colors[box["class"]] =
@@ -133,8 +125,16 @@ const API = {
       ) {
         rect.appendChild(text);
         rects.appendChild(rect);
+        if (typeof largest["score"] === "undefined") {
+          largest = box;
+        } else if (
+          Number(largest["score"].toFixed(2)) < Number(box["score"].toFixed(2))
+        ) {
+          largest = box;
+        }
       }
     });
+    setLargest(typeof largest["score"] === "undefined" ? {} : largest);
     return true;
   }
 };
