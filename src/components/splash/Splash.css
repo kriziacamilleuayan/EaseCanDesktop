@@ -1,0 +1,19 @@
+.main{
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    /* background-color: #ACB7AE; */
+    background-color: #1DBAB4;
+}
+.logo{
+    /* background-color: #1DBAB4; */
+    background-color: #ACB7AE;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50%;
+    width: 50%;
+    height: auto;
+}
