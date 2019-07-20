@@ -1,0 +1,28 @@
+#cameraSceneView {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: gray;
+}
+#cameraSceneRects {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+#cameraOpWrap {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+#cameraToggleOrientation {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  top: 93%;
+  left: 90%;
+  border: solid;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
