@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Reviews from './components/review/Reviews'
 import "./App.css";
 
 import CameraFrame from "./components/camera/CameraFrame";
@@ -12,6 +13,7 @@ export default class App extends Component {
         <AppManager>
           <CameraFrame />
         </AppManager>
+        <Reviews/>
       </div>
     );
   }
