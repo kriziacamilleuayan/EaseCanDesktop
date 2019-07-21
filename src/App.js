@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Reviews from "./components/review/Reviews";
 import "./App.css";
 
 import CameraFrame from "./components/camera/CameraFrame";
@@ -8,27 +9,32 @@ import Splash from './components/splash/Splash'
 import Reviews from './components/reviews/Reviews'
 import Products from './components/products/Products'
 
+
 export default class App extends Component {
   state = {
-    viewSplash: true
-  }
+    viewSplash: true,
+    hasDetected: false
+  };
   hideSplash = () => {
-    this.setState({ viewSplash: false })
-  }
+    this.setState({ viewSplash: false });
+  };
+
+  setHasDetected = flag => {
+    this.setState({ hasDetected: flag });
+  };
+
   render() {
     return (
       <div className="App">
-        {this.state.viewSplash &&
-          <Splash hideSplash={this.hideSplash} />
-        }
-        {/* {!this.state.viewSplash &&
-          <AppManager>
+        {this.state.viewSplash && <Splash hideSplash={this.hideSplash} />}
+        {!this.state.viewSplash && (
+          <AppManager setHasDetected={this.setHasDetected}>
             <CameraFrame />
+            <Products/>
+            {this.state.hasDetected ? <Reviews /> : null}
           </AppManager>
-        } */}
-        {!this.state.viewSplash &&
-          <Products/>
-        }
+        )}
+
       </div>
     );
   }

@@ -10,7 +10,8 @@ export default class AppManager extends Component {
     cameraDOM: false,
     currentStream: null,
     intervalID: null,
-    facingMode: ""
+    facingMode: "",
+    largest: {}
   };
 
   componentDidMount() {
@@ -24,6 +25,10 @@ export default class AppManager extends Component {
         Logger.log(err);
       });
   }
+
+  scanAgain = () => {
+    this.startAnalyzing();
+  };
 
   forCameraResize = () => {
     const video = document.getElementById("cameraSceneView");
@@ -60,8 +65,18 @@ export default class AppManager extends Component {
 
   startAnalyzing = async () => {
     const localizeModel = await this.state.model;
-    const data = await API.startPredicting(localizeModel);
+    const data = await API.startPredicting(localizeModel, this.setLargest);
+    if (typeof this.state.largest["score"] !== "undefined") {
+      document.getElementById("cameraSceneRects").innerHTML = "";
+      console.log("An item was found");
+      this.props.setHasDetected(true);
+      return;
+    }
     if (data) this.startAnalyzing();
+  };
+
+  setLargest = lar => {
+    this.setState({ largest: lar });
   };
 
   render() {
@@ -70,7 +85,9 @@ export default class AppManager extends Component {
         <Provider
           value={{
             applyCamera: this.applyCamera,
-            ...this.state
+            ...this.state,
+            scanAgain: this.scanAgain,
+            setHasDetected: this.props.setHasDetected
           }}
         >
           {this.props.children}
