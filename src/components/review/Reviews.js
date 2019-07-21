@@ -54,9 +54,9 @@ const Ingredients = {
 };
 
 const Prices = {
-  pizza: 70.00,
-  doughnut: 100.00,
-  cake: 250.00
+  pizza: 70.0,
+  doughnut: 100.0,
+  cake: 250.0
 };
 
 class Reviews extends Component {
@@ -66,16 +66,27 @@ class Reviews extends Component {
     ing: [],
     quantity: 1,
     total: 0,
-    price: 0
+    price: 0,
+    borderNaPula: false
   };
 
   componentDidMount() {
     if (typeof this.props.largest["class"] !== "undefined") {
-      this.setState({
-        ing: Ingredients[this.props.largest.class],
-        price: Prices[this.props.largest.class],
-        total: Prices[this.props.largest.class]
-      });
+      this.setState(
+        {
+          ing: Ingredients[this.props.largest.class],
+          price: Prices[this.props.largest.class],
+          total: Prices[this.props.largest.class]
+        },
+        () => {
+          if (
+            this.state.ing.join(" ").indexOf(this.props.allergy) >= 0 &&
+            this.props.allergy.length !== 0
+          ) {
+            this.setState({ borderNaPula: true });
+          }
+        }
+      );
     }
   }
 
@@ -136,6 +147,10 @@ class Reviews extends Component {
     this.props.scanAgain();
   };
 
+  componentWillMount() {
+    this.props.allergyOnChange("");
+  }
+
   render() {
     console.log("this.state", this.state, Ingredients);
     return (
@@ -143,37 +158,50 @@ class Reviews extends Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={() => this.setState({ modalIsOpen: false })}
-          style={customStyles}
+          style={{
+            ...customStyles,
+            ...{ border: "15px solid red !important" }
+          }}
           contentLabel="Example Modal"
           ariaHideApp={false}
         >
           <button onClick={this.closeModal} style={customStyles.close}>
             x
           </button>
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>
-            {this.state.largest.class}
+          <h2
+            ref={subtitle => (this.subtitle = subtitle)}
+            style={this.state.borderNaPula ? { color: "red" } : {}}
+          >
+            {String(this.state.largest.class).toUpperCase()}
           </h2>
+          {this.state.borderNaPula ? (
+            <p style={{ color: "red" }}>
+              {"You are allergic to this product."}
+            </p>
+          ) : null}
           <p>{this.state.ing ? this.state.ing.join(", ") : ""}</p>
 
-          <p style={{ textAlign: "center" }}>{this.state.price}</p>
+          <p style={{ textAlign: "center" }}>{"Php " + this.state.price}</p>
 
           <p style={{ textAlign: "center" }}>Quantity</p>
-          <button
-            onClick={e => this.handleClick(e)}
-            disabled={this.state.quantity == 1}
-            name="minus"
-          >
-            -
-          </button>
-          <input
-            type="number"
-            name="quantity"
-            value={this.state.quantity}
-            onChange={e => this.handleChange(e)}
-          />
-          <button onClick={e => this.handleClick(e)} name="plus">
-            +
-          </button>
+          <div style={{ justifyContent: "center", display: "flex" }}>
+            <button
+              onClick={e => this.handleClick(e)}
+              disabled={this.state.quantity == 1}
+              name="minus"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              name="quantity"
+              value={this.state.quantity}
+              onChange={e => this.handleChange(e)}
+            />
+            <button onClick={e => this.handleClick(e)} name="plus">
+              +
+            </button>
+          </div>
 
           <h2 style={{ textAlign: "center" }}>Total</h2>
 
@@ -187,15 +215,24 @@ class Reviews extends Component {
             >
               Scan Again
             </button>
-            <button
+            {/* <button
               style={customStyles.primaryBtn}
               onClick={e => this.handleButton(e)}
               name="btnCart"
             >
               Add to Cart
-            </button>
+            </button> */}
           </div>
+
           {/* input data to map here */}
+          {/* <div style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          border: "5px solid red",
+          zIndex: '99999',
+          ba
+        }}></div> */}
         </Modal>
       </>
     );
@@ -211,7 +248,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "90%"
+    width: "90%",
+    border: "15px solid red !important"
   },
   close: {
     float: "right",
