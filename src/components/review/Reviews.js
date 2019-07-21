@@ -172,7 +172,7 @@ class Reviews extends Component {
             ref={subtitle => (this.subtitle = subtitle)}
             style={this.state.borderNaPula ? { color: "red" } : {}}
           >
-            {this.state.largest.class}
+            {String(this.state.largest.class).toUpperCase()}
           </h2>
           {this.state.borderNaPula ? (
             <p style={{ color: "red" }}>
