@@ -11,7 +11,8 @@ export default class AppManager extends Component {
     currentStream: null,
     intervalID: null,
     facingMode: "",
-    largest: {}
+    largest: {},
+    allergy: ""
   };
 
   componentDidMount() {
@@ -59,6 +60,12 @@ export default class AppManager extends Component {
       });
   };
 
+  allergyOnChange = (e) => {
+    this.setState({
+      allergy: e
+    })
+  }
+
   setCurrentStream = stream => {
     this.setState({ currentStream: stream });
   };
@@ -87,7 +94,8 @@ export default class AppManager extends Component {
             applyCamera: this.applyCamera,
             ...this.state,
             scanAgain: this.scanAgain,
-            setHasDetected: this.props.setHasDetected
+            setHasDetected: this.props.setHasDetected,
+            allergyOnChange: this.allergyOnChange
           }}
         >
           {this.props.children}

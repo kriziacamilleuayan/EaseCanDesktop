@@ -14,6 +14,22 @@ class CameraFrame extends Component {
         <video id="cameraSceneView" autoPlay playsInline muted />
         <div id="cameraSceneRects" />
         <div id="cameraOpWrap" />
+        <div>
+          <input
+            type="text"
+            value={this.props.allergy}
+            placeholder="Enter Allergy"
+            onChange={e => this.props.allergyOnChange(e.target.value)}
+            style={{
+              position: 'absolute',
+              zIndex: '2',
+              width: "300px",
+              height: "14px",
+              bottom: '0',
+              margin: '2em'
+            }}
+          />
+        </div>
       </Fragment>
     );
   }
