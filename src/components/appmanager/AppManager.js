@@ -68,7 +68,8 @@ export default class AppManager extends Component {
     const data = await API.startPredicting(localizeModel, this.setLargest);
     if (typeof this.state.largest["score"] !== "undefined") {
       document.getElementById("cameraSceneRects").innerHTML = "";
-      alert("An item was found");
+      console.log("An item was found");
+      this.props.setHasDetected(true);
       return;
     }
     if (data) this.startAnalyzing();
@@ -84,7 +85,9 @@ export default class AppManager extends Component {
         <Provider
           value={{
             applyCamera: this.applyCamera,
-            ...this.state
+            ...this.state,
+            scanAgain: this.scanAgain,
+            setHasDetected: this.props.setHasDetected
           }}
         >
           {this.props.children}
