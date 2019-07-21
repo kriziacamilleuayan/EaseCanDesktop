@@ -1,0 +1,23 @@
+.container{
+    padding: 10px;
+}
+.productContainer{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+    background-color: #1DBAB4;
+}
+.productName{
+    color: #fff;
+    font-weight: bold;
+}
+.productPrice{
+    color: #fff;
+}
+.totalAmount{
+    float: right;
+    color: #1DBAB4;
+    font-weight: bold;
+}
