@@ -6,6 +6,7 @@ import AppManager from "./components/appmanager/AppManager";
 import Spinner from "./components/spinner/Spinner";
 import Splash from './components/splash/Splash'
 import Reviews from './components/reviews/Reviews'
+import Products from './components/products/Products'
 
 export default class App extends Component {
   state = {
@@ -26,7 +27,7 @@ export default class App extends Component {
           </AppManager>
         } */}
         {!this.state.viewSplash &&
-          <Reviews />
+          <Products/>
         }
       </div>
     );

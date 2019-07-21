@@ -30,6 +30,30 @@ export function getReviewsShopee(productUrlShopee) {
 
 }
 
+export function getReviewsShopeeId(itemId, shopId) {
+    let url = `https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=` + itemId +
+        `&limit=0&offset=0&shopid=` + shopId;
+
+    let proxy = `https://cors-anywhere.herokuapp.com/`
+
+    axios.get(proxy+url, {
+        crossDomain: true
+    })
+        .then(res => {
+            console.log(res)
+            let reviews = res.data.data.ratings;
+            for (let review of reviews) {
+                console.log(review.comment)
+            }
+            //What do you want to return?
+            return reviews;
+        })
+        .catch(err => {
+            console.log("Something went wrong: ", err)
+        })
+
+}
+
 export function getReviewsLazada(productUrlLazada) {
     let productUrlArray = productUrlLazada.split("-i");
     let productUrlArray2 = productUrlArray[1].split("-s");
